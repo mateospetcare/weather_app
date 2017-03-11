@@ -13,16 +13,16 @@ $(document).ready(function(){
 
    var fog = function(){
   // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
-  $('.image').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+  $('#weatherImage').prepend('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
   };
   
  var sun = function(){
   // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
-  // $('.image').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+  // $('#weatherImage').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
   };
   
 var cloud = function(){
-  // $('.image').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+  // $('#weatherImage').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
   // $(".cloud").animate({left: '150px', bottom: '20px'}, 1000).show();
   };
 
@@ -34,30 +34,25 @@ var cloud = function(){
    $(".snow").animate({ left: '150px', bottom: '20px'}, 1000).show();
   };
   
-  var data = function(coordObj){
-    console.log("++++++", coordObj)
-    var latitude  = coordObj.latitude;
-    var longitude = coordObj.longitude; 
+var data = function(coordObj){
+    var coordinates = coordObj;
+    var latitude  = coordinates.lat;
+    var longitude = coordinates.longi; 
 
-console.log("++++++", latitude, longitude)
-
- 
  var getCityState = function() {
 
   var city_location_data = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true";
 
   
   var data = $.ajax({url: city_location_data , success: function(result){
-    cityName = result.results[0].address_components[2].long_name; 
-    stateName = result.results[0].address_components[4].short_name
-      $("#location").append("<h1>"+cityName+"</h1>")
+    cityName = result.results[3].address_components[1].long_name; 
+    stateName = result.results[3].address_components[3].short_name;
+      $("#location").append("<h1>"+cityName+","+stateName+"</h1>");
      }})
-  
 }  
   
-  
+getCityState()
 
-    
 
   var api = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units="+units+"&appid=cf2294b8f96e4bf52da1a582fdb53a38"
 
@@ -68,7 +63,6 @@ console.log("++++++", latitude, longitude)
  var current_temp = Math.round(Number(result.main.temp))
   
  if(units === "imperial"){
-  console.log('we in here now')
     $("#f_temp").show(); 
     $("#f_temp").append("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
    $("#c_temp").hide(); 
@@ -97,7 +91,6 @@ console.log("++++++", latitude, longitude)
 var getLocation = function() {
   if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
-        getCityState()
     } else { 
        console.log( "Geolocation is not supported by this browser.");
     }
@@ -106,17 +99,13 @@ var getLocation = function() {
 var showPosition = function(position) {
 
   var coordObj = {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
+      lat: position.coords.latitude,
+      longi: position.coords.longitude
   }
     data(coordObj)
 }
 
-if(firstRun){
-   getLocation() 
-   data();
-   firstRun = false; 
-  }
+
 
  $("#c_temp").click(function(){
    units = "imperial";
@@ -127,16 +116,15 @@ if(firstRun){
   
 
  $("#f_temp").click(function(){
-  console.log('in f temp')
    units = "metric";
    degrees = "C"; 
    data();
      })
 
- $('h1').on('click', function (e) {
-        console.log('this is the click');
-        e.preventDefault();
-    });
+ if(firstRun){
+   getLocation() 
+   firstRun = false; 
+  }
 
 
 })

@@ -1,13 +1,9 @@
-h1 .temp {
-  color: pink;
-}
 
-/*.cloud {
-  background-image: url('./backgroundPictures/sunny_am.png');
-  background-size: cover;
-}*/
 
-.image img{
+#weatherImage img{
   max-height: 400px;
   width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
