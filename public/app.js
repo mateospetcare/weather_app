@@ -10,6 +10,11 @@ $(document).ready(function(){
      $(".cloud").animate({left: '150px', bottom: '20px'}, 1000).hide();
    $(".rain_cloud").animate({ left: '150px', bottom: '20px'}, 1000).hide();
    $(".snow").animate({ left: '150px', bottom: '20px'}, 1000).hide();
+
+   var fog = function(){
+  // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
+  $('.image').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+  };
   
  var sun = function(){
   // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
@@ -37,7 +42,7 @@ var cloud = function(){
 console.log("++++++", latitude, longitude)
 
  
- function getCityState() {
+ var getCityState = function() {
 
   var city_location_data = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true";
 
@@ -47,10 +52,10 @@ console.log("++++++", latitude, longitude)
     stateName = result.results[0].address_components[4].short_name
       $("#location").append("<h1>"+cityName+"</h1>")
      }})
-   return data
+  
 }  
   
-   getCityState()
+  
 
     
 
@@ -65,11 +70,11 @@ console.log("++++++", latitude, longitude)
  if(units === "imperial"){
   console.log('we in here now')
     $("#f_temp").show(); 
-    $("#f_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+    $("#f_temp").append("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
    $("#c_temp").hide(); 
  } else {
    $("#c_temp").show(); 
-   $("#c_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+   $("#c_temp").append("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
    $("#f_temp").hide(); 
      }
     if(condition === "Clouds"){
@@ -80,6 +85,8 @@ console.log("++++++", latitude, longitude)
       rain_cloud()
     } else if(condition === "Snow"){
       snow()
+    } else if(condition === "Fog"){
+      fog()
     } else {
       console.log('need to make this gif')
       }
@@ -87,15 +94,16 @@ console.log("++++++", latitude, longitude)
   })  
 }; 
 
-function getLocation() {
+var getLocation = function() {
   if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
+        getCityState()
     } else { 
        console.log( "Geolocation is not supported by this browser.");
     }
   }
 
-function showPosition(position) {
+var showPosition = function(position) {
 
   var coordObj = {
       latitude: position.coords.latitude,
@@ -115,12 +123,20 @@ if(firstRun){
    degrees= "F";
    data();
      })
+
   
+
  $("#f_temp").click(function(){
+  console.log('in f temp')
    units = "metric";
    degrees = "C"; 
    data();
      })
+
+ $('h1').on('click', function (e) {
+        console.log('this is the click');
+        e.preventDefault();
+    });
 
 
 })
