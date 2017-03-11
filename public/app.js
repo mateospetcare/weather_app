@@ -47,10 +47,11 @@ var data = function(coordObj){
   var data = $.ajax({url: city_location_data , success: function(result){
     cityName = result.results[3].address_components[1].long_name; 
     stateName = result.results[3].address_components[3].short_name;
-      $("#location").append("<h1>"+cityName+","+stateName+"</h1>");
+      $("#location").html("<h1>"+cityName+","+stateName+"</h1>");
      }})
 }  
-  
+
+
 getCityState()
 
 
@@ -64,11 +65,11 @@ getCityState()
   
  if(units === "imperial"){
     $("#f_temp").show(); 
-    $("#f_temp").append("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+    $("#f_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
    $("#c_temp").hide(); 
  } else {
    $("#c_temp").show(); 
-   $("#c_temp").append("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+   $("#c_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
    $("#f_temp").hide(); 
      }
     if(condition === "Clouds"){
@@ -88,6 +89,8 @@ getCityState()
   })  
 }; 
 
+var cordsGlobal; 
+
 var getLocation = function() {
   if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
@@ -102,6 +105,7 @@ var showPosition = function(position) {
       lat: position.coords.latitude,
       longi: position.coords.longitude
   }
+  cordsGlobal = coordObj; 
     data(coordObj)
 }
 
@@ -110,7 +114,7 @@ var showPosition = function(position) {
  $("#c_temp").click(function(){
    units = "imperial";
    degrees= "F";
-   data();
+   data(cordsGlobal);
      })
 
   
@@ -118,7 +122,7 @@ var showPosition = function(position) {
  $("#f_temp").click(function(){
    units = "metric";
    degrees = "C"; 
-   data();
+   data(cordsGlobal);
      })
 
  if(firstRun){
