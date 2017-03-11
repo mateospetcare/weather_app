@@ -6,32 +6,24 @@ $(document).ready(function(){
  var degrees = "F";
  var firstRun = true; 
 
-  $(".sun").animate({left: '150px', bottom: '20px'}, 1000).hide();
-     $(".cloud").animate({left: '150px', bottom: '20px'}, 1000).hide();
-   $(".rain_cloud").animate({ left: '150px', bottom: '20px'}, 1000).hide();
-   $(".snow").animate({ left: '150px', bottom: '20px'}, 1000).hide();
-
-   var fog = function(){
-  // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
-  $('#weatherImage').prepend('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+ var fog = function(){
+  console.log('need fog')
   };
   
  var sun = function(){
-  // $(".sun").animate({left: '150px', bottom: '20px'}, 1000).show();
-  // $('#weatherImage').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
+  $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
   };
   
 var cloud = function(){
-  // $('#weatherImage').append('<img class="img-responsive" src="./backgroundPictures/sunny_am.png">');
-  // $(".cloud").animate({left: '150px', bottom: '20px'}, 1000).show();
+ $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/cloud_am.png">');
   };
 
  var rain_cloud = function(){
-   $(".rain_cloud").animate({ left: '150px', bottom: '20px'}, 1000).show();
+    $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/rain_am.png">');
   };
   
   var snow = function(){
-   $(".snow").animate({ left: '150px', bottom: '20px'}, 1000).show();
+   $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/snow_am.png">');
   };
   
 var data = function(coordObj){
@@ -60,7 +52,7 @@ getCityState()
   $.ajax({url: api , success: function(result){
   
   condition = result.weather[0].main; 
-
+  console.log('condition', condition); 
  var current_temp = Math.round(Number(result.main.temp))
   
  if(units === "imperial"){
