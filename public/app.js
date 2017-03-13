@@ -31,6 +31,8 @@ var data = function(coordObj){
     var latitude  = coordinates.lat;
     var longitude = coordinates.longi; 
 
+
+
  var getCityState = function() {
 
   var city_location_data = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true";
@@ -45,26 +47,23 @@ var data = function(coordObj){
 
 
 getCityState()
-
-
-  var api = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units="+units+"&appid=cf2294b8f96e4bf52da1a582fdb53a38"
+ var api = "https://api.apixu.com/v1/current.json?key=ce0f507f220a4ef6b7f41146171303&q="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
-  
-  condition = result.weather[0].main; 
-  console.log('condition', condition); 
- var current_temp = Math.round(Number(result.main.temp))
-  
+  var condition = result.current.condition.text; 
+  console.log(condition)
  if(units === "imperial"){
+  var degreesInF =  Math.round(Number(result.current.temp_f)); 
     $("#f_temp").show(); 
-    $("#f_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+    $("#f_temp").html("<h1 class='temp'>"+degreesInF+"&deg;"+degrees+"</h1>");
    $("#c_temp").hide(); 
  } else {
+  var degreesInC =  Math.round(Number(result.current.temp_c)); 
    $("#c_temp").show(); 
-   $("#c_temp").html("<h1 class='temp'>"+current_temp+"&deg;"+degrees+"</h1>");
+   $("#c_temp").html("<h1 class='temp'>"+degreesInC+"&deg;"+degrees+"</h1>");
    $("#f_temp").hide(); 
      }
-    if(condition === "Clouds"){
+    if(condition === "Clouds" || condition === "Partly cloudy"){
       cloud()
     } else if(condition === "Clear"){
       sun()
