@@ -39,8 +39,9 @@ var data = function(coordObj){
 
   
   var data = $.ajax({url: city_location_data , success: function(result){
-    cityName = result.results[3].address_components[1].long_name; 
-    stateName = result.results[3].address_components[3].short_name;
+    cityName = result.results[0].address_components[3].long_name; 
+    stateName = result.results[0].address_components[5].short_name;
+    console.log('result', result)
       $("#location").html("<h1>"+cityName+","+stateName+"</h1>");
      }})
 }  
@@ -51,7 +52,7 @@ getCityState()
 
   $.ajax({url: api , success: function(result){
   var condition = result.current.condition.text; 
-  console.log(condition)
+
  if(units === "imperial"){
   var degreesInF =  Math.round(Number(result.current.temp_f)); 
     $("#f_temp").show(); 
@@ -66,6 +67,8 @@ getCityState()
     if(condition === "Clouds" || condition === "Partly cloudy"){
       cloud()
     } else if(condition === "Clear"){
+      cloud()
+    } else if(condition === "Sunny"){
       sun()
     } else if(condition === "Rain" || condition === "Drizzle")     {
       rain_cloud()
