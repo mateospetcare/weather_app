@@ -46,10 +46,12 @@ var data = function(coordObj){
      }})
 }  
 
-
 getCityState()
 
- var api = "https://api.apixu.com/v1/current.json?key=ce0f507f220a4ef6b7f41146171303&q="+latitude+","+longitude;
+$.getScript("config.js", function(){
+
+
+ var api = "https://api.apixu.com/v1/current.json?key="+weatherAppApiKey+"="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
  
@@ -82,6 +84,7 @@ getCityState()
       console.log('need to make this gif')
       }
     } 
+   });
   })  
 }; 
 
