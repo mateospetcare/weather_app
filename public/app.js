@@ -27,6 +27,7 @@ var cloud = function(){
   };
   
 var data = function(coordObj){
+
     var coordinates = coordObj;
     var latitude  = coordinates.lat;
     var longitude = coordinates.longi; 
@@ -34,23 +35,24 @@ var data = function(coordObj){
 
 
  var getCityState = function() {
-
-  var city_location_data = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=true";
+ 
+  var city_location_data = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&key=AIzaSyDI0TDY0OzVU4st_4jJMjlByEX3zGVrnCY";
 
   
   var data = $.ajax({url: city_location_data , success: function(result){
     cityName = result.results[0].address_components[3].long_name; 
-    stateName = result.results[0].address_components[5].short_name;
-    console.log('result', result)
+    stateName = result.results[0].address_components[5].short_name; 
       $("#location").html("<h1>"+cityName+","+stateName+"</h1>");
      }})
 }  
 
 
 getCityState()
+
  var api = "https://api.apixu.com/v1/current.json?key=ce0f507f220a4ef6b7f41146171303&q="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
+ 
   var condition = result.current.condition.text; 
 
  if(units === "imperial"){
@@ -86,6 +88,7 @@ getCityState()
 var cordsGlobal; 
 
 var getLocation = function() {
+
   if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
     } else { 
@@ -99,6 +102,7 @@ var showPosition = function(position) {
       lat: position.coords.latitude,
       longi: position.coords.longitude
   }
+
   cordsGlobal = coordObj; 
     data(coordObj)
 }
