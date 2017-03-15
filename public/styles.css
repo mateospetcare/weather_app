@@ -1,9 +1,8 @@
 body {
-  background: url("./backgroundPictures/weather_background.jpeg")top center fixed;
    width: 100%;
     height: auto;
 }
-}
+
 
 #weatherImage img{
   max-height: 400px;

@@ -35,8 +35,8 @@ var data = function(coordObj){
 
 
  var getCityState = function() {
- 
-  var city_location_data = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&key=AIzaSyDI0TDY0OzVU4st_4jJMjlByEX3zGVrnCY";
+ $.getScript("config.js", function(){
+  var city_location_data = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&key="+location_api_key;
 
   
   var data = $.ajax({url: city_location_data , success: function(result){
@@ -44,6 +44,7 @@ var data = function(coordObj){
     stateName = result.results[0].address_components[5].short_name; 
       $("#location").html("<h1>"+cityName+","+stateName+"</h1>");
      }})
+  }); 
 }  
 
 getCityState()
@@ -54,7 +55,22 @@ $.getScript("config.js", function(){
  var api = "https://api.apixu.com/v1/current.json?key="+weatherAppApiKey+"="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
- 
+
+ var dayornight = result.current.condition.icon;
+
+var backgroundImage = function(stringIcon){
+if (stringIcon.indexOf('night') > -1) {
+  console.log('yep night time')
+  $('body').css("background","url('./backgroundPictures/weather_background.jpeg')");
+  return true;
+} else {
+  console.log('nope day time')
+  return false;
+  }
+};
+
+backgroundImage(dayornight); 
+
   var condition = result.current.condition.text; 
 
  if(units === "imperial"){
