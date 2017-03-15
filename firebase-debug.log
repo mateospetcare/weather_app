@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.4.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.10.0
+[debug] Time:         Tue Mar 14 2017 22:00:44 GMT-0700 (PDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/mateobalcorta/Desktop/coding apps/weather_app
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000

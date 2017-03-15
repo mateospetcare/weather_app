@@ -25,6 +25,10 @@ var cloud = function(){
   var snow = function(){
    $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/snow_am.png">');
   };
+
+  var nightClear = function(){
+   $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/nightClear_am.png">');
+  };
   
 var data = function(coordObj){
 
@@ -35,6 +39,7 @@ var data = function(coordObj){
 
 
  var getCityState = function() {
+
  $.getScript("config.js", function(){
   var city_location_data = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&key="+location_api_key;
 
@@ -55,6 +60,7 @@ $.getScript("config.js", function(){
  var api = "https://api.apixu.com/v1/current.json?key="+weatherAppApiKey+"="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
+var whatTimeIsIt; 
 
  var dayornight = result.current.condition.icon;
 
@@ -62,10 +68,10 @@ var backgroundImage = function(stringIcon){
 if (stringIcon.indexOf('night') > -1) {
   console.log('yep night time')
   $('body').css("background","url('./backgroundPictures/weather_background.jpeg')");
-  return true;
+  whatTimeIsIt = 'night'; 
 } else {
-  console.log('nope day time')
-  return false;
+  $('body').css("background","url('./backgroundPictures/daytime_backgroung.jpg')");
+  whatTimeIsIt = 'day'; 
   }
 };
 
@@ -84,11 +90,16 @@ backgroundImage(dayornight);
    $("#c_temp").html("<h1 class='temp'>"+degreesInC+"&deg;"+degrees+"</h1>");
    $("#f_temp").hide(); 
      }
-    if(condition === "Clouds" || condition === "Partly cloudy"){
+
+    if(condition === "Clouds"){
       cloud()
     } else if(condition === "Clear"){
+      sun()
+    }else if(condition === "Partly cloudy" && whatTimeIsIt === 'night'){
+      nightClear()
+    } else if(condition === "Clear"){
       cloud()
-    } else if(condition === "Sunny"){
+    }else if(condition === "Sunny"){
       sun()
     } else if(condition === "Rain" || condition === "Drizzle")     {
       rain_cloud()
@@ -116,13 +127,13 @@ var getLocation = function() {
   }
 
 var showPosition = function(position) {
-
   var coordObj = {
       lat: position.coords.latitude,
       longi: position.coords.longitude
   }
 
   cordsGlobal = coordObj; 
+
     data(coordObj)
 }
 
@@ -143,6 +154,7 @@ var showPosition = function(position) {
      })
 
  if(firstRun){
+
    getLocation() 
    firstRun = false; 
   }
