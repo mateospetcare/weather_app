@@ -7,7 +7,7 @@ $(document).ready(function(){
  var firstRun = true; 
 
  var fog = function(){
-  console.log('need fog')
+  $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/overcast_am.png">');
   };
   
  var sun = function(){
@@ -30,6 +30,9 @@ var cloud = function(){
    $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/nightClear_am.png">');
   };
   
+  var overcast = function(){
+   $('#weatherImage').html('<img class="img-responsive" src="./backgroundPictures/overcast_am.png">');
+  };
 var data = function(coordObj){
 
     var coordinates = coordObj;
@@ -60,6 +63,7 @@ $.getScript("config.js", function(){
  var api = "https://api.apixu.com/v1/current.json?key="+weatherAppApiKey+"="+latitude+","+longitude;
 
   $.ajax({url: api , success: function(result){
+
 var whatTimeIsIt; 
 
  var dayornight = result.current.condition.icon;
@@ -95,11 +99,13 @@ backgroundImage(dayornight);
       cloud()
     } else if(condition === "Clear"){
       sun()
-    }else if(condition === "Partly cloudy" && whatTimeIsIt === 'night'){
+    } else if(condition === "Partly cloudy" && whatTimeIsIt === 'night'){
       nightClear()
     } else if(condition === "Clear"){
       cloud()
-    }else if(condition === "Sunny"){
+    } else if(condition === "Overcast"){
+      overcast()
+    } else if(condition === "Sunny"){
       sun()
     } else if(condition === "Rain" || condition === "Drizzle")     {
       rain_cloud()
