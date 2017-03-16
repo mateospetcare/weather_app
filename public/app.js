@@ -114,7 +114,8 @@ backgroundImage(dayornight);
     } else if(condition === "Fog"){
       fog()
     } else {
-      console.log('need to make this gif')
+      sun()
+      console.log('need to make this gif', condition)
       }
     } 
    });
